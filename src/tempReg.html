@@ -1,0 +1,76 @@
+
+<!-- Temporary reg lang kumuha na lang muna ako template di ko mapagana yung modals -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Registration Form In HTML and CSS</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	
+<div class="wrapper">
+	<div class="registration_form">
+		<div class="title">
+			Registration Form
+		</div>
+
+		<form id="CreateTeacher-form">
+			<div class="form_wrap">
+				<div class="input_grp">
+					<div class="input_wrap">
+						<label for="fname">First Name</label>
+						<input type="text" id="fname">
+					</div>
+					<div class="input_wrap">
+						<label for="lname">Last Name</label>
+						<input type="text" id="lname">
+					</div>
+				</div>
+				<div class="input_wrap">
+					<label for="email">Email Address</label>
+					<input type="text" id="email">
+				</div>
+				<div class="input_wrap">
+					<label for="Subject">Subject</label>
+					<input type="text" id="subject">
+				</div>
+				<div class="input_wrap">
+					<label for="pass">Password</label>
+					<input type="password" id="password">
+				</div>
+				<div class="input_wrap">
+					<input type="submit" value="Register Now" class="submit_btn">
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<!-- <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js'
+
+    // Add Firebase products that you want to use
+    import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-auth.js'
+    import { getFirestore, collection, getDocs, addDoc, setDoc, doc } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js'
+
+	const firebaseConfig = {
+		apiKey: "AIzaSyAM0IhDz3yQUoW6rRyibPs5ycP_Qy9m4yI",
+		authDomain: "thesis-stt.firebaseapp.com",
+		projectId: "thesis-stt",
+		storageBucket: "thesis-stt.appspot.com",
+		messagingSenderId: "97710671692",
+		appId: "1:97710671692:web:eee2713280d169567a31e9",
+		measurementId: "G-253G486YBT"
+	};
+
+	const app = initializeApp(firebaseConfig);
+	const auth = getAuth();
+	const db = getFirestore();
+
+</script> -->
+
+<script type="module" src="./js/index.js"></script>;
+
+</body>
+</html>
