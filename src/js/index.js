@@ -1,22 +1,16 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js'
 
-    // Add Firebase products that you want to use
-    import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-auth.js'
-    import { getFirestore, collection, getDocs, addDoc, setDoc, doc } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js'
+// Add Firebase products that you want to use
+import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-auth.js'
+import { getFirestore, collection, getDocs, addDoc, setDoc, doc } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js'
 
-	const firebaseConfig = {
-		apiKey: "AIzaSyAM0IhDz3yQUoW6rRyibPs5ycP_Qy9m4yI",
-		authDomain: "thesis-stt.firebaseapp.com",
-		projectId: "thesis-stt",
-		storageBucket: "thesis-stt.appspot.com",
-		messagingSenderId: "97710671692",
-		appId: "1:97710671692:web:eee2713280d169567a31e9",
-		measurementId: "G-253G486YBT"
-	};
+//Firebase Config
+import { firebaseConfig } from './firebase';
 
-	const app = initializeApp(firebaseConfig);
-	const auth = getAuth();
-	const db = getFirestore();
+//Initialization
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const db = getFirestore();
 
 //signup
 const AddTeacher = document.querySelector('#CreateTeacher-form');
