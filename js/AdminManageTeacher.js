@@ -44,7 +44,7 @@ AddTeacher.addEventListener('submit', (e) => {
                 AddTeacher.querySelector('#error').innerHTML = 'Password should be at least 6 characters';
             }
             else if(err.code === "auth/email-already-in-use"){
-                AddTeacher.querySelector('#error').innerHTML = 'Email is already in use';
+                AddTeacher.querySelector('#error').innerHTML = 'Email is already in used';
             }
             else{
                 AddTeacher.querySelector('#error').innerHTML = err.message;
