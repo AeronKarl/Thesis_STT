@@ -2,7 +2,7 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase
 
 // Add Firebase products that you want to use
 import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-auth.js'
-import { getFirestore, collection, getDocs, addDoc, setDoc, doc } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js'
+import { getFirestore, collection, onSnapshot, query, where, setDoc, doc } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js'
 
 
 
@@ -28,7 +28,8 @@ AddTeacher.addEventListener('submit', (e) => {
     createUserWithEmailAndPassword(auth, email, pass)
         .then(async (cred) => {
             await setDoc(doc(db, "users", cred.user.uid), {
-                name: AddTeacher['TeacherName'].value ,
+                firstName: AddTeacher['TeacherFirstName'].value ,
+                lastName: AddTeacher['TeacherLastName'].value,
                 email: AddTeacher['TeacherEmail'].value ,
                 address:  AddTeacher['TeacherAddress'].value ,
                 phone: AddTeacher['TeacherPhone'].value ,
@@ -54,9 +55,38 @@ AddTeacher.addEventListener('submit', (e) => {
 
 })
 
-$(document).ready(function() {
-    $('#teacherTable').DataTable();
+//Read data and Realtime Showing of Data
+$(document).ready(() => {
+   var table = $('#teacherTable').DataTable({
+    columns: [
+        {title: "Name"},
+        {title: "Address"},
+        {title: "Phone Number"},
+        {title: "Email", defaultContent: ""},
+        {title: "Manage", defaultContent: '<button id="edit" class="btn btn-primary btn-sm">Edit</button> <button id="delete" class="btn btn-danger btn-sm">Delete</button>'}
+    ]
+   });
 
-    
+    const q = query(collection(db, "users"), where("userType", "==", "teacher"));
+    onSnapshot(q, (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+            let firstName = change.doc.data().firstName;
+            let lastName = change.doc.data().lastName;
+            let fullName = firstName + " " + lastName;
+            let address = change.doc.data().address;
+            let phone = change.doc.data().phone;
+            let email = change.doc.data().email;
+
+            let tableRow = [fullName, address, phone, email];
+
+            if (change.type === "added") {
+                table.rows.add([tableRow]).draw();
+            }
+
+            console.log(tableRow);
+        })
+    }).catch((err) => {
+        console.log(err.message);
+    })
 
   });
