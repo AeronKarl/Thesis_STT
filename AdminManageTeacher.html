@@ -70,6 +70,12 @@
                     <i class="fas fa-fw fa-table"></i>
                     <span>Manage Teacher</span></a>
             </li>
+            <!-- Nav Item - Tables --Manage students -->
+            <li class="nav-item active">
+                <a class="nav-link" href="AdminManageStudent.html">
+                    <i class="fa-solid fa-bars-progress"></i>
+                    <span>Manage Student</span></a>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -127,7 +133,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Manage Teacher</h1>
+                    <h1 class="h3 mb-2 text-gray-800 font-weight-bold">Manage Teacher</h1>
 
                     <!-- DataTales Example -->
                     <div class="card shadow-lg ">
@@ -149,40 +155,69 @@
                                             <div class="modal-content border border-dark rounded-top">
                                                 <form id="CreateTeacher">
                                                     <div class="modal-header bg-primary ">						
-                                                        <h4 class="modal-title text-white">Add Teacher</h4>
+                                                        <h4 class="modal-title text-white font-weight-bold">Add Teacher</h4>
                                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                                     </div>
-                                                    <div class="modal-body">					
-                                                        <div class="form-group text-left">
-                                                            <i class="fa-solid fa-user-tie"></i>
-                                                            <label class="text-gray-900">First Name</label> 
-                                                            <input id="TeacherFirstName" type="text" class="form-control" placeholder="Enter First Name" required >
-                                                            
+                                                    <div class="modal-body">
+                                <!--FIRST NAME-->
+                                                    	<div class="form-group text-left">
+                                                            <label class="text-gray-900">First Name</label>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user-tie fa-lg"></i></span>
+                                                                    </div>
+                                                                    <input id="TeacherFirstName" type="text" class="form-control" placeholder="Enter First Name" required >  
+                                                                </div>  
                                                         </div>
+                                <!--LAST NAME-->
                                                         <div class="form-group text-left">
-                                                            <i class="fa-solid fa-user-tie"></i>
                                                             <label class="text-gray-900">Last Name</label>
-                                                            <input id="TeacherLastName" type="text" class="form-control" placeholder="Enter Last Name" required>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user-tie fa-lg"></i></span>
+                                                                    </div>
+                                                                    <input id="TeacherLastName" type="text" class="form-control" placeholder="Enter Last Name" required>
+                                                                </div>
                                                         </div>
+                                <!--EMAIL-->                        
                                                         <div class="form-group text-left">
-                                                            <i class="fa-solid fa-envelope"></i>
                                                             <label class="text-gray-900">Email</label>
-                                                            <input id="TeacherEmail" type="email" class="form-control" placeholder="Enter Email" required>
-                                                        </div>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-envelope fa-lg"></i></span>
+                                                                    </div>
+                                                                <input id="TeacherEmail" type="email" class="form-control" placeholder="Enter Email" required>
+                                                            </div>
+                                                        </div>    
+                                <!--ADDRESS-->          
                                                         <div class="form-group text-left">
-                                                            <i class="fa-solid fa-location-dot"></i>
                                                             <label class="text-gray-900">Address</label>
-                                                            <textarea id="TeacherAddress" class="form-control" placeholder="Enter Address" required></textarea>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-location-dot fa-lg"></i></span>
+                                                                    </div>
+                                                                <textarea id="TeacherAddress" class="form-control" placeholder="Enter Address" required></textarea>
+                                                            </div>
                                                         </div>
+                                <!--PHONE NUMBER-->                           
                                                         <div class="form-group text-left">
-                                                            <i class="fa-solid fa-square-phone"></i>
                                                             <label class="text-gray-900">Phone Number</label>
-                                                            <input id="TeacherPhone" type="text" class="form-control" placeholder="Enter Phone Number" required>
-                                                        </div>		
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-phone fa-lg"></i></span>
+                                                                    </div>       
+                                                                <input id="TeacherPhone" type="text" class="form-control" placeholder="Enter Phone Number" required>
+                                                            </div>
+                                                        </div>	
+                                <!--PASSWORD-->                            		
                                                         <div class="form-group text-left">
-                                                            <i class="fa-solid fa-key"></i>
                                                             <label class="text-gray-900">Password</label>
-                                                            <input id="TeacherPassword" type="password" class="form-control" placeholder="Enter Password" required>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-key fa-lg"></i></span>
+                                                                    </div>
+                                                                <input id="TeacherPassword" type="password" class="form-control" placeholder="Enter Password" required>
+                                                            </div>
                                                         </div>
                                                         <p id="error" class="text-danger text-center m-n2"></p>			
                                                     </div>
