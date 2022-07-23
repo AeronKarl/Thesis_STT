@@ -11,6 +11,9 @@
 
     <title>SB Admin 2 - Tables</title>
 
+    <!--sample logo-->
+	<link rel="icon" href="img/sample logo.png" type="image/x-icon">
+
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -31,7 +34,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -127,7 +130,7 @@
                     <h1 class="h3 mb-2 text-gray-800">Manage Teacher</h1>
 
                     <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
+                    <div class="card shadow-lg ">
                         <div class="card-header py-3">
                             <div class="row">
                                 <div class="col-md-10">
@@ -135,49 +138,57 @@
                                 </div>
                                 <div class="col-md-2 text-right">
                                     <!-- Add Teacher Button -->
-                                    <button type="button" class="btn btn-primary btn-sm m-n1" data-toggle="modal" data-target="#addTeacherModal">
+                                    <button type="button" class="btn btn-primary btn-sm m-n1 " data-toggle="modal" data-target="#addTeacherModal">
+                                        <i class="fa-solid fa-chalkboard-user"></i>
                                         Add Teacher
                                     </button>
 
                                     <!-- Add Teacher Modal -->
                                     <div id="addTeacherModal" class="modal fade">
                                         <div class="modal-dialog">
-                                            <div class="modal-content">
+                                            <div class="modal-content border border-dark rounded-top">
                                                 <form id="CreateTeacher">
-                                                    <div class="modal-header">						
-                                                        <h4 class="modal-title text-gray-900">Add Teacher</h4>
+                                                    <div class="modal-header bg-primary ">						
+                                                        <h4 class="modal-title text-white">Add Teacher</h4>
                                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                                     </div>
                                                     <div class="modal-body">					
                                                         <div class="form-group text-left">
-                                                            <label class="text-gray-900">First Name</label>
-                                                            <input id="TeacherFirstName" type="text" class="form-control" placeholder="Enter First Name" required>
+                                                            <i class="fa-solid fa-user-tie"></i>
+                                                            <label class="text-gray-900">First Name</label> 
+                                                            <input id="TeacherFirstName" type="text" class="form-control" placeholder="Enter First Name" required >
+                                                            
                                                         </div>
                                                         <div class="form-group text-left">
+                                                            <i class="fa-solid fa-user-tie"></i>
                                                             <label class="text-gray-900">Last Name</label>
                                                             <input id="TeacherLastName" type="text" class="form-control" placeholder="Enter Last Name" required>
                                                         </div>
                                                         <div class="form-group text-left">
+                                                            <i class="fa-solid fa-envelope"></i>
                                                             <label class="text-gray-900">Email</label>
                                                             <input id="TeacherEmail" type="email" class="form-control" placeholder="Enter Email" required>
                                                         </div>
                                                         <div class="form-group text-left">
+                                                            <i class="fa-solid fa-location-dot"></i>
                                                             <label class="text-gray-900">Address</label>
                                                             <textarea id="TeacherAddress" class="form-control" placeholder="Enter Address" required></textarea>
                                                         </div>
                                                         <div class="form-group text-left">
+                                                            <i class="fa-solid fa-square-phone"></i>
                                                             <label class="text-gray-900">Phone Number</label>
                                                             <input id="TeacherPhone" type="text" class="form-control" placeholder="Enter Phone Number" required>
                                                         </div>		
                                                         <div class="form-group text-left">
+                                                            <i class="fa-solid fa-key"></i>
                                                             <label class="text-gray-900">Password</label>
                                                             <input id="TeacherPassword" type="password" class="form-control" placeholder="Enter Password" required>
                                                         </div>
                                                         <p id="error" class="text-danger text-center m-n2"></p>			
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                                        <input type="submit" class="btn btn-success" value="Add">
+                                                        <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Cancel">
+                                                        <input type="submit" class="btn btn-primary" value="Add">
                                                     </div>
                                                 </form>
                                             </div>
@@ -190,7 +201,7 @@
                         
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="teacherTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered shadow-sm" id="teacherTable" width="100%" cellspacing="0">
                                     
                                 </table>
                             </div>
@@ -254,7 +265,7 @@
 
     <!-- js file -->
     <script type="module" src="js/AdminManageTeacher.js"></script>
-
+    <script src="https://kit.fontawesome.com/917066f681.js" crossorigin="anonymous"></script>
 </body>
 
 </html>
