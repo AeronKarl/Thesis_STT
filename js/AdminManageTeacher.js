@@ -1,8 +1,8 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js'
 
 // Add Firebase products that you want to use
-import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-auth.js'
-import { getFirestore, collection, onSnapshot, query, where, setDoc, doc } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js'
+import { getAuth, createUserWithEmailAndPassword, deleteUser} from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-auth.js'
+import { getFirestore, collection, onSnapshot, query, where, setDoc, doc, deleteDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js'
 
 
 
@@ -59,17 +59,22 @@ AddTeacher.addEventListener('submit', (e) => {
 $(document).ready(() => {
    var table = $('#teacherTable').DataTable({
     columns: [
+        {title: "TeacherID", visible: false},
         {title: "Name"},
         {title: "Address"},
         {title: "Phone Number"},
         {title: "Email", defaultContent: ""},
-        {title: "Manage", defaultContent: '<button id="edit" class="btn btn-primary btn-sm">Edit</button> <button id="delete" class="btn btn-danger btn-sm">Delete</button>'}
+        {title: "Manage", defaultContent: '<button id="edit" class="btn btn-primary btn-sm data-toggle="modal" data-target="#editTeacherModal"">Edit</button> <button id="delete" class="btn btn-danger btn-sm">Delete</button>'}
     ]
    });
+
+   
+
 
     const q = query(collection(db, "users"), where("userType", "==", "teacher"));
     onSnapshot(q, (snapshot) => {
         snapshot.docChanges().forEach((change) => {
+            let teacherID = change.doc.id;
             let firstName = change.doc.data().firstName;
             let lastName = change.doc.data().lastName;
             let fullName = firstName + " " + lastName;
@@ -77,16 +82,61 @@ $(document).ready(() => {
             let phone = change.doc.data().phone;
             let email = change.doc.data().email;
 
-            let tableRow = [fullName, address, phone, email];
+            let tableRow = [teacherID, fullName, address, phone, email];
 
             if (change.type === "added") {
                 table.rows.add([tableRow]).draw();
             }
+            // if(change.type === "modified"){
+            //     table.row().data([tableRow]).draw();
+            // }
+            if(change.type === "removed"){
+                table.row().remove([tableRow]).draw();
+            }
 
             console.log(tableRow);
         })
-    }).catch((err) => {
-        console.log(err.message);
     })
+
+    $("#teacherTable tbody").on("click", "#edit", function () {
+        $('#editTeacherModal').modal("show");
+        var data = table.row($(this).parents('tr')).data();
+        console.log(data[0]);
+        let teacherID = doc(db, "users", data[0]);
+        $('#editTeacher').on('submit', async function(e){
+
+            await updateDoc(teacherID, {
+                firstName: document.getElementById('editTeacherFirstName').value ,
+                lastName: document.getElementById('editTeacherLastName').value ,
+                address: document.getElementById('editTeacherAddress').value ,
+                phone: document.getElementById('editTeacherPhone').value
+            }).then(() => {
+                $('#editTeacherModal').modal("hide");
+                document.querySelector('#editTeacher').reset();
+                location.reload();
+            }).catch((err) => {
+                console.log(err.message);
+            })
+        })
+
+        // 
+        
+    });
+
+    
+    $("#teacherTable tbody").on("click", "#delete", async function () {
+        $('#deleteTeacherModal').modal("show");
+        let data = table.row($(this).parents('tr')).data();
+        let teacherID = doc(db, "users", data[0]);
+        $('#buttonDelete').on('click', async function(e){
+            await deleteDoc(teacherID)
+            .then(() => {
+                $('#deleteTeacherModal').modal("hide");
+            })
+            .catch((err) => {
+                console.log(err.message);
+            })
+        })
+    });
 
   });

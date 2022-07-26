@@ -237,7 +237,87 @@
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered shadow-sm" id="teacherTable" width="100%" cellspacing="0">
-                                    
+
+                                    <!-- Edit Teacher Modal -->
+                                    <div id="editTeacherModal" class="modal fade">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content border border-dark rounded-top">
+                                                <form id="editTeacher" onsubmit="return false">
+                                                    <div class="modal-header bg-primary ">						
+                                                        <h4 class="modal-title text-white font-weight-bold">Edit Teacher</h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                <!--FIRST NAME-->
+                                                    	<div class="form-group text-left">
+                                                            <label class="text-gray-900">First Name</label>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user-tie fa-lg"></i></span>
+                                                                    </div>
+                                                                    <input id="editTeacherFirstName" type="text" class="form-control" placeholder="Enter First Name" required >  
+                                                                </div>  
+                                                        </div>
+                                <!--LAST NAME-->
+                                                        <div class="form-group text-left">
+                                                            <label class="text-gray-900">Last Name</label>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user-tie fa-lg"></i></span>
+                                                                    </div>
+                                                                    <input id="editTeacherLastName" type="text" class="form-control" placeholder="Enter Last Name" required>
+                                                                </div>
+                                                        </div>
+  
+                                <!--ADDRESS-->          
+                                                        <div class="form-group text-left">
+                                                            <label class="text-gray-900">Address</label>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-location-dot fa-lg"></i></span>
+                                                                    </div>
+                                                                <textarea id="editTeacherAddress" class="form-control" placeholder="Enter Address" required></textarea>
+                                                            </div>
+                                                        </div>
+                                <!--PHONE NUMBER-->                           
+                                                        <div class="form-group text-left">
+                                                            <label class="text-gray-900">Phone Number</label>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-phone fa-lg"></i></span>
+                                                                    </div>       
+                                                                <input id="editTeacherPhone" type="text" class="form-control" placeholder="Enter Phone Number" required>
+                                                            </div>
+                                                        </div>	                         		
+                                                        
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Cancel">
+                                                        <input id="save" type="submit" class="btn btn-primary" value="Save">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Delete Teacher Confirmation Modal -->
+                                    <div class="modal fade" id="deleteTeacherModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title text-gray-900" id="exampleModalLabel">Delete Teacher</h5>
+                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">×</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body text-gray-900">Are You Sure you want to delete this Teacher?</div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                    <button id="buttonDelete" class="btn btn-danger">Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </table>
                             </div>
                         </div>
