@@ -1,8 +1,8 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js'
 
 // Add Firebase products that you want to use
-import { getAuth, createUserWithEmailAndPassword, deleteUser} from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-auth.js'
-import { getFirestore, collection, onSnapshot, query, where, setDoc, doc, deleteDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js'
+import { getAuth, createUserWithEmailAndPassword} from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-auth.js'
+import { getFirestore, collection, onSnapshot, query, where, setDoc, doc, deleteDoc, updateDoc, getDoc } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js'
 
 
 
@@ -16,6 +16,7 @@ const db = getFirestore();
 
 //signup
 const AddTeacher = document.querySelector('#CreateTeacher');
+const cancelButton = document.querySelector('#cancel');
 AddTeacher.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -24,7 +25,7 @@ AddTeacher.addEventListener('submit', (e) => {
     const pass = AddTeacher['TeacherPassword'].value;
 
     
-    // sign up the user
+    // sign up the user or Create Teacher
     createUserWithEmailAndPassword(auth, email, pass)
         .then(async (cred) => {
             await setDoc(doc(db, "users", cred.user.uid), {
@@ -33,6 +34,7 @@ AddTeacher.addEventListener('submit', (e) => {
                 email: AddTeacher['TeacherEmail'].value ,
                 address:  AddTeacher['TeacherAddress'].value ,
                 phone: AddTeacher['TeacherPhone'].value ,
+                password: AddTeacher['TeacherPassword'].value, 
                 userType: "teacher"
             });
         }).then(() => {
@@ -55,7 +57,12 @@ AddTeacher.addEventListener('submit', (e) => {
 
 })
 
-//Read data and Realtime Showing of Data
+$('#addTeacherModal').on('hidden.bs.modal', function () {
+    $(this).find('form').trigger('reset');
+})
+
+
+//Table Related Functions
 $(document).ready(() => {
    var table = $('#teacherTable').DataTable({
     columns: [
@@ -70,7 +77,7 @@ $(document).ready(() => {
 
    
 
-
+   // SHOW DATA
     const q = query(collection(db, "users"), where("userType", "==", "teacher"));
     onSnapshot(q, (snapshot) => {
         snapshot.docChanges().forEach((change) => {
@@ -98,18 +105,29 @@ $(document).ready(() => {
         })
     })
 
-    $("#teacherTable tbody").on("click", "#edit", function () {
+    //EDIT TEACHER
+    $("#teacherTable tbody").on("click", "#edit", async function () {
         $('#editTeacherModal').modal("show");
+
         var data = table.row($(this).parents('tr')).data();
-        console.log(data[0]);
         let teacherID = doc(db, "users", data[0]);
+
+        //Assign Values in text box
+        let getTeacher = await getDoc(teacherID);
+        document.getElementById('editTeacherFirstName').value = getTeacher.data()["firstName"];
+        document.getElementById('editTeacherLastName').value = getTeacher.data()["lastName"];
+        document.getElementById('editTeacherEmail').value = getTeacher.data()["email"];
+        document.getElementById('editTeacherAddress').value = getTeacher.data()["address"];
+        document.getElementById('editTeacherPhone').value = getTeacher.data()["phone"];
+
         $('#editTeacher').on('submit', async function(e){
 
             await updateDoc(teacherID, {
                 firstName: document.getElementById('editTeacherFirstName').value ,
                 lastName: document.getElementById('editTeacherLastName').value ,
+                email: document.getElementById('editTeacherEmail').value,
                 address: document.getElementById('editTeacherAddress').value ,
-                phone: document.getElementById('editTeacherPhone').value
+                phone: document.getElementById('editTeacherPhone').value,
             }).then(() => {
                 $('#editTeacherModal').modal("hide");
                 document.querySelector('#editTeacher').reset();
@@ -123,7 +141,7 @@ $(document).ready(() => {
         
     });
 
-    
+    // DELETE TEACHER
     $("#teacherTable tbody").on("click", "#delete", async function () {
         $('#deleteTeacherModal').modal("show");
         let data = table.row($(this).parents('tr')).data();
