@@ -16,7 +16,6 @@ const db = getFirestore();
 
 //signup
 const AddTeacher = document.querySelector('#CreateTeacher');
-const cancelButton = document.querySelector('#cancel');
 AddTeacher.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -136,8 +135,6 @@ $(document).ready(() => {
                 console.log(err.message);
             })
         })
-
-        // 
         
     });
 

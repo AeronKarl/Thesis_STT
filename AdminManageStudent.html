@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Tables</title>
+    <title>Manage Student</title>
 
     <!--sample logo-->
 	<link rel="icon" href="img/sample logo.png" type="image/x-icon">
@@ -121,7 +121,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-900 ">Student Name</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-900 ">Teacher Name</span>
                             </a>
                         </li>
                     </ul>
@@ -203,12 +203,12 @@
                             
                                 <!--PHONE NUMBER-->                           
                                                         <div class="form-group text-left">
-                                                            <label class="text-gray-900">Phone Number</label>
+                                                            <label class="text-gray-900">Parent Phone Number</label>
                                                                 <div class="input-group mb-3">
                                                                     <div class="input-group-prepend">
                                                                         <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-phone fa-lg"></i></span>
                                                                     </div>       
-                                                                <input id="StudentPhone" type="text" class="form-control" placeholder="Enter Phone Number" required>
+                                                                <input id="ParentPhone" type="text" class="form-control" placeholder="Enter Parent Phone Number" required>
                                                             </div>  <!--changed class-->
                                                         </div>
 
@@ -221,7 +221,7 @@
                                                                         <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-images fa-lg"></i></span>
                                                                     </div>
                                                                     <div class="custom-file">
-                                                                        <input type="file" class="form-control" id="customFile"/>
+                                                                        <input type="file" class="form-control" id="customFile" required/>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -243,8 +243,27 @@
                         
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered shadow-sm" id="teacherTable" width="100%" cellspacing="0">
-                                    
+                                <table class="table table-bordered shadow-sm" id="studentTable" width="100%" cellspacing="0">
+
+                                    <!-- Delete Teacher Confirmation Modal -->
+                                    <div class="modal fade" id="deleteStudentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title text-gray-900" id="exampleModalLabel">Delete Student</h5>
+                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">×</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body text-gray-900">Are You Sure you want to delete this Student?</div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                    <button id="buttonDelete" class="btn btn-danger">Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </table>
                             </div>
                         </div>
@@ -306,7 +325,7 @@
     <script src="js/demo/datatables-demo.js"></script>
 
     <!-- js file -->
-    <script type="module" src="js/AdminManageTeacher.js"></script>
+    <script type="module" src="js/AdminManageStudent.js"></script>
     <script src="https://kit.fontawesome.com/917066f681.js" crossorigin="anonymous"></script>
 </body>
 
