@@ -106,18 +106,83 @@ $(document).ready(() => {
 
     //EDIT TEACHER
     $("#studentTable tbody").on("click", "#edit", async function () {
-        $('#editTeacherModal').modal("show");
+        $('#editStudentModal').modal("show");
 
-        // var data = table.row($(this).parents('tr')).data();
-        // let teacherID = doc(db, "users", data[0]);
+        var data = table.row($(this).parents('tr')).data();
+        let studentID = doc(db, "students", data[0]);
 
-        // //Assign Values in text box
-        // let getTeacher = await getDoc(teacherID);
-        // document.getElementById('editTeacherFirstName').value = getTeacher.data()["firstName"];
-        // document.getElementById('editTeacherLastName').value = getTeacher.data()["lastName"];
-        // document.getElementById('editTeacherEmail').value = getTeacher.data()["email"];
-        // document.getElementById('editTeacherAddress').value = getTeacher.data()["address"];
-        // document.getElementById('editTeacherPhone').value = getTeacher.data()["phone"];
+        //Assign Values in text box
+        let getStudent = await getDoc(studentID);
+        const assignPic = sRef(storage, getStudent.data()["pictureURL"]);
+        document.getElementById('editStudentFirstName').value = getStudent.data()["firstName"];
+        document.getElementById('editStudentMiddleName').value = getStudent.data()["middleName"];
+        document.getElementById('editStudentLastName').value = getStudent.data()["lastName"];
+        document.getElementById('editParentName').value = getStudent.data()["parentName"];
+        document.getElementById('editParentPhone').value = getStudent.data()["parentPhone"];
+
+        //assign picture student in input
+        const url = getStudent.data()["pictureURL"];
+        function loadURLToInputFiled(url){
+            getImgURL(url, (imgBlob)=>{
+              // Load img blob to input
+              // WIP: UTF8 character error
+              let fileName = assignPic.name;
+              let file = new File([imgBlob], fileName,{type:"image/jpeg", lastModified:new Date().getTime()}, 'utf-8');
+              let container = new DataTransfer(); 
+              container.items.add(file);
+              document.querySelector('#editcustomFile').files = container.files;
+              
+            })
+          }
+        // xmlHTTP return blob respond
+        function getImgURL(url, callback){
+            var xhr = new XMLHttpRequest();
+            xhr.onload = function() {
+                callback(xhr.response);
+            };
+            xhr.open('GET', url);
+            xhr.responseType = 'blob';
+            xhr.send();
+        }
+        loadURLToInputFiled(url);
+
+
+        $('#editStudent').on('submit', async function(e){
+            let fname = document.querySelector("#editStudentFirstName").value;
+            let lname = document.querySelector("#editStudentLastName").value;
+            const file = document.querySelector("#editcustomFile").files[0];
+            const name = fname + " " + lname;
+            const metadata = {
+                contentType: file.type
+            };
+            const storageRef = sRef(storage, name);
+
+            uploadBytes(storageRef, file, metadata)
+                .then(snapshot => {
+                    //Getting the URL of the uploaded Image
+                    return getDownloadURL(snapshot.ref);
+                }).then(async downloadURL => {
+                    console.log('The Download URL is ', downloadURL);
+                    await updateDoc(studentID, {
+                        firstName: document.getElementById('editStudentFirstName').value ,
+                        middleName: document.getElementById('editStudentMiddleName').value ,
+                        lastName: document.getElementById('editStudentLastName').value ,
+                        parentName: document.getElementById('editParentName').value , 
+                        parentPhone: document.getElementById('editParentPhone').value ,
+                        pictureURL: downloadURL
+                    }).then(() => {
+                        $('#editStudentModal').modal("hide");
+                        document.querySelector('#editStudent').reset();
+                        location.reload();
+                    }).catch((err) => {
+                        console.log(err.message);
+                    })                
+            })
+            
+        })
+          
+        
+        // document.getElementById('editcustomFile').value = assignPic.fullPath;
 
         // $('#editTeacher').on('submit', async function(e){
 
@@ -144,8 +209,8 @@ $(document).ready(() => {
         let data = table.row($(this).parents('tr')).data();
         let studentID = doc(db, "students", data[0]);
         $('#buttonDelete').on('click', async function(e){
-            let getTeacher = await getDoc(studentID);
-            const deleteStud = sRef(storage, getTeacher.data()["pictureURL"]);
+            let getStudent = await getDoc(studentID);
+            const deleteStud = sRef(storage, getStudent.data()["pictureURL"]);
 
             deleteObject(deleteStud)
             .then(async () => {
