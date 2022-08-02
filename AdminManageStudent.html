@@ -60,11 +60,11 @@
             <!-- Nav Item - Attendance -->
             <li class="nav-item">
                 <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-users"></i>
-                    <span>Courses</span></a>
+                    <i class="fas fa-fw fa-chalkboard-user"></i>
+                    <span>Attendance</span></a>
             </li>
             
-            <!-- Nav Item - Tables -->
+            <!-- Nav Item - Manage Teacher -->
             <li class="nav-item">
                 <a class="nav-link" href="AdminManageTeacher.html">
                     <i class="fas fa-fw fa-users"></i>
@@ -75,6 +75,13 @@
                 <a class="nav-link" href="AdminManageStudent.html">
                     <i class="fa-solid fa-id-card"></i>
                     <span>Manage Student</span></a>
+            </li>
+
+            <!-- Nav Item - Manage Courses -->
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>Manage Course</span></a>
             </li>
 
             <!-- Divider -->
@@ -244,6 +251,95 @@
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered shadow-sm" id="studentTable" width="100%" cellspacing="0">
+
+                                    <!-- Add Student Modal -->
+                                    <div id="editStudentModal" class="modal fade"> <!--changed class-->
+                                        <div class="modal-dialog">
+                                            <div class="modal-content border border-dark rounded-top">
+                                                <form id="editStudent" onsubmit="return false">          <!--changed class-->
+                                                    <div class="modal-header bg-primary ">						
+                                                        <h4 class="modal-title text-white font-weight-bold">Add Student</h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                <!--FIRST NAME-->
+                                                        <div class="form-group text-left">
+                                                            <label class="text-gray-900">First Name</label>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user-graduate fa-lg"></i></span>
+                                                                    </div>
+                                                                    <input id="editStudentFirstName" type="text" class="form-control" placeholder="Enter First Name" required >  
+                                                                </div>  <!--changed class-->
+                                                        </div>
+
+                                <!--MIDDLE NAME-->
+                                                        <div class="form-group text-left">
+                                                            <label class="text-gray-900">Middle Name</label>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user-graduate fa-lg"></i></span>
+                                                                    </div>
+                                                                    <input id="editStudentMiddleName" type="text" class="form-control" placeholder="Enter Middle Name" required >  
+                                                                </div>  <!--changed class-->
+                                                        </div>
+                                <!--LAST NAME-->
+                                                        <div class="form-group text-left">
+                                                            <label class="text-gray-900">Last Name</label>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user-graduate fa-lg"></i></span>
+                                                                    </div>
+                                                                    <input id="editStudentLastName" type="text" class="form-control" placeholder="Enter Last Name" required>
+                                                                </div>  <!--changed class-->
+                                                        </div>
+                                <!--PARENT NAME-->                        
+                                                        <div class="form-group text-left">
+                                                            <label class="text-gray-900">Parent Name</label>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user-tie fa-lg"></i></span>
+                                                                    </div>
+                                                                <input id="editParentName" type="text" class="form-control" placeholder="Enter Parent Name" required>
+                                                            </div>  <!--changed class-->
+                                                        </div>    
+                            
+                                <!--PHONE NUMBER-->                           
+                                                        <div class="form-group text-left">
+                                                            <label class="text-gray-900">Parent Phone Number</label>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-phone fa-lg"></i></span>
+                                                                    </div>       
+                                                                <input id="editParentPhone" type="text" class="form-control" placeholder="Enter Parent Phone Number" required>
+                                                            </div>  <!--changed class-->
+                                                        </div>
+
+                                <!--STUDENT PICTURE-->       
+                                                         <!--STUDENT PICTURE-->                            
+                                                        <div class="form-group text-left">
+                                                            <label class="text-gray-900">Student's Picture</label>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-images fa-lg"></i></span>
+                                                                    </div>
+                                                                    <div class="custom-file">
+                                                                        <input type="file" class="form-control" id="editcustomFile" required/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                          
+                                                        <div class="modal-footer rounded-top bg-light">
+                                                            <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Cancel">
+                                                            <input type="submit" class="btn btn-primary" value="Save">
+                                                        </div>
+                                                   </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
 
                                     <!-- Delete Teacher Confirmation Modal -->
                                     <div class="modal fade" id="deleteStudentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
