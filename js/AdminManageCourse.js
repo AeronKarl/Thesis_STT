@@ -14,8 +14,21 @@ const db = getFirestore(app);
 
 
 const AddCourse = document.querySelector('#CreateCourse');
-AddCourse.addEventListener('submit', (e) => {
+AddCourse.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    let name = document.getElementById("addCourseName").value;
+    let teacher = document.getElementById("addCourseTeacher").value;
+    let selectedStudents = $('[name="addCourseStudent[]"]').val();
+    
+
+    const newCourse = await addDoc(collection(db, "courses"), {
+        courseName: name ,
+        courseTeacher: teacher ,
+        courseStudents: selectedStudents
+    })
+    console.log("Document ID: ", newCourse.id);
+    $('#addCourseModal').modal('hide');
 
 })
 
@@ -33,7 +46,6 @@ $(document).ready(async() => {
         ]
        });
     
-
     //add users in the dropdown select
     var choiceTeacher = document.getElementById("addCourseTeacher");
     const teacherQuery = query(collection(db, "users"), where("userType", "==", "teacher"));
@@ -56,8 +68,34 @@ $(document).ready(async() => {
         duallistbox.bootstrapDualListbox('refresh');
     })
 
+    //Realtime Change of table
+    const q = query(collection(db, "courses"));
+    onSnapshot(q, (snapshot) => {
+        snapshot.docChanges().forEach(async(change) => {
+            let courseID = change.doc.id;
+            let CourseName = change.doc.data().courseName;
+            let CourseTeacher = change.doc.data().courseTeacher;
 
-    
+            let teacherNameRef = doc(db, "users", CourseTeacher);
+            let getTeacher = await getDoc(teacherNameRef);
+            let teacherName = getTeacher.data()['firstName'] + " " + getTeacher.data()['lastName'];
+
+            let tableRow = [courseID, CourseName, teacherName];
+
+            if (change.type === "added") {
+                table.rows.add([tableRow]).draw();
+            }
+            // if(change.type === "modified"){
+            //     table.row().data([tableRow]).draw();
+            // }
+            if(change.type === "removed"){
+                table.row().remove([tableRow]).draw();
+            }
+
+            console.log(tableRow);
+        })
+    })
+
 
     //reset modal
     $('#addCourseModal').on('hidden.bs.modal', function () {
