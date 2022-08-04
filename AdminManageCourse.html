@@ -82,7 +82,7 @@
             <!-- Nav Item - Manage Courses -->
             <li class="nav-item active">
                 <a class="nav-link" href="AdminManageCourse.html">
-                    <i class="fa-solid fa-envelope"></i>
+                    <i class="fa-solid fa-swatchbook"></i>
                     <span>Manage Course</span></a>
             </li>
 
@@ -114,7 +114,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow bg-gradient-light">
+                <nav class="navbar navbar-expand navbar-light  topbar mb-4 static-top bg-gradient-light">
 
                     <!-- Sidebar Toggle (Topbar) -->
                     <form class="form-inline">
@@ -154,17 +154,17 @@
                                 <div class="col-md-2 text-right">
                                     <!-- Add Courses Button -->
                                     <button id="courseButton" type="button" class="btn btn-primary btn-sm m-n1 " data-toggle="modal" data-target="#addCourseModal">
-                                        <i class="fa-solid fa-user-graduate"></i>
-                                        Add Course
+                                        <i class="fa-solid fa-folder-open"></i>
+                                         Add Course
                                     </button>
 
 
                                     <!-- Add Course Modal -->
                                     <div id="addCourseModal" class="modal fade"> <!--changed class-->
-                                        <div class="modal-dialog">
+                                        <div class="modal-dialog modal-lg">
                                             <div class="modal-content border border-dark rounded-top">
                                                 <form id="CreateCourse">          <!--changed class-->
-                                                    <div class="modal-header bg-primary ">						
+                                                    <div class="modal-header bg-primary">						
                                                         <h4 class="modal-title text-white font-weight-bold">Add Course</h4>
                                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                                     </div>
@@ -174,7 +174,7 @@
                                                             <label class="text-gray-900">Course Name</label>
                                                                 <div class="input-group mb-3">
                                                                     <div class="input-group-prepend">
-                                                                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user-graduate fa-lg"></i></span>
+                                                                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-file-pen "></i></span>
                                                                     </div>
                                                                     <input id="StudentFirstName" type="text" class="form-control" placeholder="Enter Course Name" required >  
                                                                 </div>  <!--changed class-->
@@ -185,7 +185,7 @@
                                                             <label class="text-gray-900">Teacher</label>
                                                                 <div class="input-group mb-3">
                                                                     <div class="input-group-prepend">
-                                                                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user-graduate fa-lg"></i></span>
+                                                                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user-tie fa-lg"></i></span>
                                                                     </div>
                                                                     <select id="addCourseTeacher" class="form-control">
                                                                         <option value="0" selected disabled>Select Teacher</option>
@@ -193,19 +193,14 @@
                                                                 </div>  <!--changed class-->
                                                         </div>
                                 <!--Students in Course-->
+                                                        
                                                         <div class="form-group text-left">
-                                                            <label class="text-gray-900">Students</label>
+                                                            <label class="text-gray-900">Students:</label>
                                                                 <div class="input-group mb-3">
-                                                                    <div class="input-group-prepend">
-                                                                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user-graduate fa-lg"></i></span>
-                                                                    </div>
-                                                                    <select id="addCourseStudent" multiple="multiple" size="1000">
-                                                                        
-                                                                    </select>
+                                                                    <select id="addCourseStudent" multiple="multiple" size="1000"> </select>
                                                                 </div>  <!--changed class-->
                                                         </div>
-
-                                                          
+                                                        </div>
                                                         <div class="modal-footer rounded-top bg-light">
                                                             <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Cancel">
                                                             <input type="submit" class="btn btn-primary" value="Add">
@@ -222,7 +217,7 @@
                         </div>
                         
                         
-                        <div class="card-body bg-white">
+                        <div class="card-body bg-white shadow-lg">
                             <div class="table-responsive ">
                                 <table class="table table-bordered shadow-sm" id="courseTable" width="100%" cellspacing="0">
 
