@@ -1,7 +1,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js'
 
 // Add Firebase products that you want to use
-import { getFirestore, collection, onSnapshot, query, where, setDoc, doc, deleteDoc, updateDoc, getDoc, addDoc } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js'
+import { getFirestore, collection, onSnapshot, query, doc, deleteDoc, updateDoc, getDoc, addDoc } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js'
 import { getStorage, ref as sRef, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-storage.js"
 
 
@@ -67,11 +67,11 @@ $(document).ready(() => {
     var table = $('#studentTable').DataTable({
         columns: [
             {title: "StudentID", visible: false},
-            {title: "Name"},
+            {title: "Student Name"},
             {title: "Parent Name"},
             {title: "Parent Number"},
             {title: "Student Picture", defaultContent: ""},
-            {title: "Manage", defaultContent: '<button id="edit" class="btn btn-primary btn-sm data-toggle="modal" data-target="#editStudentModal"">Edit</button> <button id="delete" class="btn btn-danger btn-sm">Delete</button>'}
+            {title: "Action", defaultContent: '<button id="edit" class="btn btn-primary btn-sm data-toggle="modal" data-target="#editStudentModal"">Edit</button> <button id="delete" class="btn btn-danger btn-sm">Delete</button>'}
         ]
        });
     
@@ -104,7 +104,7 @@ $(document).ready(() => {
         })
     })
 
-    //EDIT TEACHER
+    //EDIT Student
     $("#studentTable tbody").on("click", "#edit", async function () {
         $('#editStudentModal').modal("show");
 
@@ -181,25 +181,6 @@ $(document).ready(() => {
             
         })
           
-        
-        // document.getElementById('editcustomFile').value = assignPic.fullPath;
-
-        // $('#editTeacher').on('submit', async function(e){
-
-        //     await updateDoc(teacherID, {
-        //         firstName: document.getElementById('editTeacherFirstName').value ,
-        //         lastName: document.getElementById('editTeacherLastName').value ,
-        //         email: document.getElementById('editTeacherEmail').value,
-        //         address: document.getElementById('editTeacherAddress').value ,
-        //         phone: document.getElementById('editTeacherPhone').value,
-        //     }).then(() => {
-        //         $('#editTeacherModal').modal("hide");
-        //         document.querySelector('#editTeacher').reset();
-        //         location.reload();
-        //     }).catch((err) => {
-        //         console.log(err.message);
-        //     })
-        // })
         
     });
 
