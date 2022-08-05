@@ -95,7 +95,53 @@ $(document).ready(async() => {
             console.log(tableRow);
         })
     })
+    
+    //EDIT COURSE
+    $("#courseTable tbody").on("click", "#edit", async function () {
+        $('#editCourseModal').modal("show");
 
+        var data = table.row($(this).parents('tr')).data();
+        let teacherID = doc(db, "courses", data[0]);
+
+        //Assign Values in text box
+        let getCourses = await getDoc(courseID);
+        document.getElementById('').value = getCourses.data()[""];
+        document.getElementById('').value = getCourses.data()[""];
+        document.getElementById('').value = getCourses.data()[""];
+        
+
+        $('#editCourse').on('submit', async function(e){
+
+            await updateDoc(teacherID, {
+                firstName: document.getElementById('').value ,
+                lastName: document.getElementById('').value ,
+                email: document.getElementById('').value,
+            }).then(() => {
+                $('#editCourseModal').modal("hide");
+                document.querySelector('#editCourse').reset();
+                location.reload();
+            }).catch((err) => {
+                console.log(err.message);
+            })
+        })
+        
+    });
+    
+    // DELETE COURSE
+    $("#courseTable tbody").on("click", "#delete", async function () {
+        $('#deleteCourseModal').modal("show");
+        let data = table.row($(this).parents('tr')).data();
+        let courseID = doc(db, "courses", data[0]);
+        $('#buttonDelete').on('click', async function(e){
+            await deleteDoc(courseID)
+            .then(() => {
+                $('#deleteCourseModal').modal("hide");
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
+        })
+    });
 
     //reset modal
     $('#addCourseModal').on('hidden.bs.modal', function () {
@@ -103,4 +149,4 @@ $(document).ready(async() => {
         duallistbox.bootstrapDualListbox('refresh');
     })
 
-})
+});
