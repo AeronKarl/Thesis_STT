@@ -70,7 +70,7 @@ $(document).ready(() => {
         {title: "Address"},
         {title: "Phone Number"},
         {title: "Email", defaultContent: ""},
-        {title: "Action", defaultContent: '<button id="edit" class="btn btn-primary btn-sm data-toggle="modal" data-target="#editTeacherModal"">Edit</button> <button id="delete" class="btn btn-danger btn-sm">Delete</button>'}
+        {title: "Action", defaultContent: '<button id="edit" class="btn btn-primary btn-sm m-1" data-toggle="modal" data-target="#editTeacherModal">Edit</button> <button id="delete" class="btn btn-danger btn-sm m-1">Delete</button>'}
     ]
    });
 

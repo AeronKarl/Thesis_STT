@@ -13,6 +13,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
+
 const AddCourse = document.querySelector('#CreateCourse');
 AddCourse.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -36,18 +37,22 @@ AddCourse.addEventListener('submit', async (e) => {
 
 $(document).ready(async() => {
     var duallistbox = $('#addCourseStudent').bootstrapDualListbox();
+    var editduallistbox = $('#editCourseStudent').bootstrapDualListbox();
 
     var table = $('#courseTable').DataTable({
         columns: [
             {title: "CourseID", visible: false},
             {title: "Course Name"},
             {title: "Teacher"},
-            {title: "Action", defaultContent: '<button id="edit" class="btn btn-primary btn-sm data-toggle="modal" data-target="#editTeacherModal"">Edit</button> <button id="delete" class="btn btn-danger btn-sm">Delete</button>'}
+            {title: "Action", defaultContent: '<button id="view" class="btn btn-primary btn-sm m-1" data-toggle="modal" data-target="#">View</button>'
+            +'<button id="edit" class="btn btn-primary btn-sm m-1" data-toggle="modal" data-target="#editTeacherModal">Edit</button>' + 
+            '<button id="delete" class="btn btn-danger btn-sm m-1">Delete</button>'}
         ]
        });
     
     //add users in the dropdown select
     var choiceTeacher = document.getElementById("addCourseTeacher");
+    var editChoiceTeacher = document.getElementById("editCourseTeacher")
     const teacherQuery = query(collection(db, "users"), where("userType", "==", "teacher"));
     const getTeacher = await getDocs(teacherQuery);
 
@@ -59,8 +64,15 @@ $(document).ready(async() => {
         choiceTeacher.add(optionTeacher);
     })
 
+    getTeacher.forEach((doc) => {
+        let optionTeacher = document.createElement("option");
+        optionTeacher.value = doc.id;
+        console.log("Teacher value: " + optionTeacher.value);
+        optionTeacher.text = doc.data()['firstName'] + " " + doc.data()['lastName'];
+        editChoiceTeacher.add(optionTeacher);
+    })
+
     // add students in list box
-    var choiceStudent = document.getElementById("addCourseStudent");
     const studentCol = await getDocs(collection(db, "students"));
     studentCol.forEach((doc) => {
         let fullName = doc.data()['firstName'] + " " + doc.data()['middleName'] + " " + doc.data()['lastName'];
@@ -84,6 +96,7 @@ $(document).ready(async() => {
 
             if (change.type === "added") {
                 table.rows.add([tableRow]).draw();
+                console.log(tableRow)
             }
             // if(change.type === "modified"){
             //     table.row().data([tableRow]).draw();
@@ -92,7 +105,6 @@ $(document).ready(async() => {
                 table.row().remove([tableRow]).draw();
             }
 
-            console.log(tableRow);
         })
     })
     
@@ -101,31 +113,63 @@ $(document).ready(async() => {
         $('#editCourseModal').modal("show");
 
         var data = table.row($(this).parents('tr')).data();
-        let teacherID = doc(db, "courses", data[0]);
+        let courseID = doc(db, "courses", data[0]);
 
         //Assign Values in text box
         let getCourses = await getDoc(courseID);
-        document.getElementById('').value = getCourses.data()[""];
-        document.getElementById('').value = getCourses.data()[""];
-        document.getElementById('').value = getCourses.data()[""];
+        document.getElementById('editCourseName').value = getCourses.data()['courseName'];
+        document.getElementById('editCourseTeacher').value = getCourses.data()['courseTeacher'];
+
+        let courseStudent = getCourses.data()['courseStudents'];
         
+        //Assign Values in the SELECTED listbox
+        const studentArray = [];
+        studentCol.forEach((doc) => {
+            for(let i = 0; i < courseStudent.length; i++){
+                if(courseStudent[i] == doc.id){
+                    let fullName = doc.data()['firstName'] + " " + doc.data()['middleName'] + " " + doc.data()['lastName'];
+                    editduallistbox.append('<option value="' + doc.id + '" selected>' + fullName +'</option>');
+                    editduallistbox.bootstrapDualListbox('refresh');
+                }
+            }
+            studentArray.push(doc.id);
+        })
 
+        console.log(studentArray);
+
+        //Assign Values of students that are not SELECTED in listbox
+        let selectedStudents = $('[name="editCourseStudent[]"]').val();
+        studentArray.filter(async (e) => {
+            const studentData = await getDoc(doc(db, "students", e))
+            console.log(selectedStudents.includes(e));
+            if(!selectedStudents.includes(e)){
+                console.log(studentData.data()['firstName']);
+                let fullName = studentData.data()['firstName'] + " " + studentData.data()['middleName'] + " " + studentData.data()['lastName'];
+                editduallistbox.append('<option value="' + studentData.id + '" >' + fullName +'</option>');
+                editduallistbox.bootstrapDualListbox('refresh');
+            }
+        });
+
+
+        //submit edit Form
         $('#editCourse').on('submit', async function(e){
+            let editname = document.getElementById("editCourseName").value;
+            let editteacher = document.getElementById("editCourseTeacher").value;
+            let editselectedStudents = $('[name="editCourseStudent[]"]').val();
 
-            await updateDoc(teacherID, {
-                firstName: document.getElementById('').value ,
-                lastName: document.getElementById('').value ,
-                email: document.getElementById('').value,
-            }).then(() => {
-                $('#editCourseModal').modal("hide");
-                document.querySelector('#editCourse').reset();
-                location.reload();
-            }).catch((err) => {
-                console.log(err.message);
+            await updateDoc(courseID, {
+                courseName: editname ,
+                courseTeacher: editteacher ,
+                courseStudents: editselectedStudents
             })
+            
+            $('#editCourseModal').modal('hide');
+            location.reload();
+            
         })
         
     });
+
     
     // DELETE COURSE
     $("#courseTable tbody").on("click", "#delete", async function () {
@@ -148,5 +192,11 @@ $(document).ready(async() => {
         $(this).find('form').trigger('reset');
         duallistbox.bootstrapDualListbox('refresh');
     })
+
+    $('#editCourseModal').on('hidden.bs.modal', function () {
+        $(this).find('form').trigger('reset');
+        $('#editCourseStudent').empty();
+    })
+
 
 });
