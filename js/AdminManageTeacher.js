@@ -1,10 +1,13 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js'
 
 // Add Firebase products that you want to use
-import { getAuth, createUserWithEmailAndPassword} from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-auth.js'
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-auth.js'
 import { getFirestore, collection, onSnapshot, query, where, setDoc, doc, deleteDoc, updateDoc, getDoc } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js'
 
+import { getDatabase, ref, set } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-database.js'
 
+//get database
+const database = getDatabase(app);
 
 //Firebase Config
 import { firebaseConfig } from './firebase.js';
@@ -155,3 +158,27 @@ $(document).ready(() => {
     });
 
   });
+
+
+
+//   Teacher Login 
+const userLogin = document.querySelector('#loginButton')
+  userLogin.addEventListener('click', (e) => {
+
+//     var email = document.getElementById('TeacherEmail').value;
+//     var password = document.getElementById('TeacherPassword').value;
+
+//     signInWithEmailAndPassword(auth, email, password)
+//         .then((userCredential) => {
+//             const user = userCredential.user;
+//                 alert(email + ' signed in')
+//         })
+//         .catch((error) => {
+//             alert(errorMessage);
+//   });
+    alert("hello!");
+    return false;
+
+  })
+
+
