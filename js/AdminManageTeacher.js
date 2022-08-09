@@ -4,10 +4,6 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-auth.js'
 import { getFirestore, collection, onSnapshot, query, where, setDoc, doc, deleteDoc, updateDoc, getDoc } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js'
 
-import { getDatabase, ref, set } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-database.js'
-
-//get database
-const database = getDatabase(app);
 
 //Firebase Config
 import { firebaseConfig } from './firebase.js';
