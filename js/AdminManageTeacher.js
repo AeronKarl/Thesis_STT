@@ -161,24 +161,4 @@ $(document).ready(() => {
 
 
 
-//   Teacher Login 
-const userLogin = document.querySelector('#loginButton')
-  userLogin.addEventListener('click', (e) => {
-
-//     var email = document.getElementById('TeacherEmail').value;
-//     var password = document.getElementById('TeacherPassword').value;
-
-//     signInWithEmailAndPassword(auth, email, password)
-//         .then((userCredential) => {
-//             const user = userCredential.user;
-//                 alert(email + ' signed in')
-//         })
-//         .catch((error) => {
-//             alert(errorMessage);
-//   });
-    alert("hello!");
-    return false;
-
-  })
-
 
