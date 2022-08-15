@@ -1,7 +1,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js'
 
 // Add Firebase products that you want to use
-import { getFirestore, collection, onSnapshot, query, where, setDoc, doc, deleteDoc, updateDoc, getDoc, addDoc, getDocs } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js'
+import { getFirestore, collection, onSnapshot, query, where, doc, deleteDoc, updateDoc, getDoc, addDoc, getDocs } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js'
 
 
 
@@ -196,6 +196,14 @@ $(document).ready(async() => {
     $('#editCourseModal').on('hidden.bs.modal', function () {
         $(this).find('form').trigger('reset');
         $('#editCourseStudent').empty();
+    })
+
+    //VIEW COURSE
+    $("#courseTable tbody").on("click", "#view", function () {
+        let data = table.row($(this).parents('tr')).data();
+        let courseID = doc(db, "courses", data[0]);
+        sessionStorage.setItem('rowCourse', data[0])
+        window.location.href="AdminViewCourse.html";
     })
 
 
