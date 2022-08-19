@@ -1,6 +1,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js'
 
 // Add Firebase products that you want to use
+import { getAuth, signOut } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-auth.js'
 import { getFirestore, collection, onSnapshot, query, where, doc, deleteDoc, updateDoc, getDoc, addDoc, getDocs } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js'
 
 
@@ -10,6 +11,7 @@ import { firebaseConfig } from './firebase.js';
 
 //Initialization
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 const db = getFirestore(app);
 
 
@@ -39,6 +41,11 @@ $(document).ready(async() => {
     var duallistbox = $('#addCourseStudent').bootstrapDualListbox();
     var editduallistbox = $('#editCourseStudent').bootstrapDualListbox();
 
+    //Show Teacher Name
+    let userLogin = sessionStorage.getItem('userLogin');
+    const getUserLogin = await getDoc(doc(db, "users", userLogin));
+    document.getElementById("teacherName").innerHTML = "Hi " + getUserLogin.data()['firstName'];
+
     var table = $('#courseTable').DataTable({
         columns: [
             {title: "CourseID", visible: false},
@@ -55,22 +62,41 @@ $(document).ready(async() => {
     var editChoiceTeacher = document.getElementById("editCourseTeacher")
     const teacherQuery = query(collection(db, "users"), where("userType", "==", "teacher"));
     const getTeacher = await getDocs(teacherQuery);
+    
 
-    getTeacher.forEach((doc) => {
+    if(getUserLogin.data()['userType'] == 'admin'){
+        getTeacher.forEach((doc) => {
+            let optionTeacher = document.createElement("option");
+            optionTeacher.value = doc.id;
+            console.log("Teacher value: " + optionTeacher.value);
+            optionTeacher.text = doc.data()['firstName'] + " " + doc.data()['lastName'];
+            choiceTeacher.add(optionTeacher);
+        })
+    }
+    else if(getUserLogin.data()['userType'] == 'teacher'){
         let optionTeacher = document.createElement("option");
-        optionTeacher.value = doc.id;
+        optionTeacher.value = getUserLogin.id;
         console.log("Teacher value: " + optionTeacher.value);
-        optionTeacher.text = doc.data()['firstName'] + " " + doc.data()['lastName'];
+        optionTeacher.text = getUserLogin.data()['firstName'] + " " + getUserLogin.data()['lastName'];
         choiceTeacher.add(optionTeacher);
-    })
+    }
 
-    getTeacher.forEach((doc) => {
+    if(getUserLogin.data()['userType'] == 'admin'){
+        getTeacher.forEach((doc) => {
+            let optionTeacher = document.createElement("option");
+            optionTeacher.value = doc.id;
+            console.log("Teacher value: " + optionTeacher.value);
+            optionTeacher.text = doc.data()['firstName'] + " " + doc.data()['lastName'];
+            editChoiceTeacher.add(optionTeacher);
+        })
+    }
+    else if(getUserLogin.data()['userType'] == 'teacher'){
         let optionTeacher = document.createElement("option");
-        optionTeacher.value = doc.id;
+        optionTeacher.value = getUserLogin.id;
         console.log("Teacher value: " + optionTeacher.value);
-        optionTeacher.text = doc.data()['firstName'] + " " + doc.data()['lastName'];
+        optionTeacher.text = getUserLogin.data()['firstName'] + " " + getUserLogin.data()['lastName'];
         editChoiceTeacher.add(optionTeacher);
-    })
+    }
 
     // add students in list box
     const studentCol = await getDocs(collection(db, "students"));
@@ -81,32 +107,62 @@ $(document).ready(async() => {
     })
 
     //Realtime Change of table
-    const q = query(collection(db, "courses"));
-    onSnapshot(q, (snapshot) => {
-        snapshot.docChanges().forEach(async(change) => {
-            let courseID = change.doc.id;
-            let CourseName = change.doc.data().courseName;
-            let CourseTeacher = change.doc.data().courseTeacher;
+    if(getUserLogin.data()['userType'] == 'admin'){
+        const q = query(collection(db, "courses"));
+        onSnapshot(q, (snapshot) => {
+            snapshot.docChanges().forEach(async(change) => {
+                let courseID = change.doc.id;
+                let CourseName = change.doc.data().courseName;
+                let CourseTeacher = change.doc.data().courseTeacher;
 
-            let teacherNameRef = doc(db, "users", CourseTeacher);
-            let getTeacher = await getDoc(teacherNameRef);
-            let teacherName = getTeacher.data()['firstName'] + " " + getTeacher.data()['lastName'];
+                let teacherNameRef = doc(db, "users", CourseTeacher);
+                let getTeacher = await getDoc(teacherNameRef);
+                let teacherName = getTeacher.data()['firstName'] + " " + getTeacher.data()['lastName'];
 
-            let tableRow = [courseID, CourseName, teacherName];
+                let tableRow = [courseID, CourseName, teacherName];
 
-            if (change.type === "added") {
-                table.rows.add([tableRow]).draw();
-                console.log(tableRow)
-            }
-            // if(change.type === "modified"){
-            //     table.row().data([tableRow]).draw();
-            // }
-            if(change.type === "removed"){
-                table.row().remove([tableRow]).draw();
-            }
+                if (change.type === "added") {
+                    table.rows.add([tableRow]).draw();
+                    console.log(tableRow)
+                }
+                // if(change.type === "modified"){
+                //     table.row().data([tableRow]).draw();
+                // }
+                if(change.type === "removed"){
+                    table.row().remove([tableRow]).draw();
+                }
 
+            })
         })
-    })
+    }
+    else if(getUserLogin.data()['userType'] == 'teacher'){
+        const q = query(collection(db, "courses"), where("courseTeacher", "==", getUserLogin.id))
+        onSnapshot(q, (snapshot) => {
+            snapshot.docChanges().forEach(async(change) => {
+                let courseID = change.doc.id;
+                let CourseName = change.doc.data().courseName;
+                let CourseTeacher = change.doc.data().courseTeacher;
+
+                let teacherNameRef = doc(db, "users", CourseTeacher);
+                let getTeacher = await getDoc(teacherNameRef);
+                let teacherName = getTeacher.data()['firstName'] + " " + getTeacher.data()['lastName'];
+
+                let tableRow = [courseID, CourseName, teacherName];
+
+                if (change.type === "added") {
+                    table.rows.add([tableRow]).draw();
+                    console.log(tableRow)
+                }
+                // if(change.type === "modified"){
+                //     table.row().data([tableRow]).draw();
+                // }
+                if(change.type === "removed"){
+                    table.row().remove([tableRow]).draw();
+                }
+
+            })
+        })
+    }
     
     //EDIT COURSE
     $("#courseTable tbody").on("click", "#edit", async function () {
@@ -201,9 +257,22 @@ $(document).ready(async() => {
     //VIEW COURSE
     $("#courseTable tbody").on("click", "#view", function () {
         let data = table.row($(this).parents('tr')).data();
-        let courseID = doc(db, "courses", data[0]);
         sessionStorage.setItem('rowCourse', data[0])
-        window.location.href="AdminViewCourse.html";
+        if(getUserLogin.data()['userType'] == "admin"){
+            window.location.href="AdminViewCourse.html";
+        }
+        else if(getUserLogin.data()['userType'] == "teacher"){
+            window.location.href="TeacherViewCourse.html";
+        }
+    })
+
+    //logout
+    $('#logout').on("click", function() {
+        signOut(auth).then(() => {
+            window.location.href = "login.html";
+          }).catch((error) => {
+            alert(error.message)
+          });
     })
 
 

@@ -1,7 +1,8 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js'
 
 // Add Firebase products that you want to use
-import { getFirestore, collection, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js'
+import { getAuth, signOut } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-auth.js'
+import { getFirestore, collection, query, where, getDocs, getDoc, doc } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js'
 
 
 
@@ -10,12 +11,20 @@ import { firebaseConfig } from './firebase.js';
 
 //Initialization
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 const db = getFirestore(app);
 
 $(document).ready(async () => {
     var totalTeachers = 0;
     var totalStudents = 0;
     var totalCourses = 0;
+
+
+    //Show Teacher Name
+    let userLogin = sessionStorage.getItem('userLogin');
+    const getUserLogin = await getDoc(doc(db, "users", userLogin));
+    document.getElementById("teacherName").innerHTML = "Hi " + getUserLogin.data()['firstName'];
+    
 
     //TOTAL TEACHERS
     const teacherQuery = query(collection(db, "users"), where("userType", "==", "teacher"));
@@ -44,5 +53,15 @@ $(document).ready(async () => {
     })
 
     document.getElementById("totalCourses").innerHTML = totalCourses;
+
+    //logout
+    $('#logout').on("click", function() {
+        signOut(auth).then(() => {
+            window.location.href = "login.html";
+          }).catch((error) => {
+            alert(error.message)
+          });
+    })
+
 
 })

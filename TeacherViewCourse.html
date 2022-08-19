@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Attendance</title>
+    <title>Manage Course</title>
 
     <!--sample logo-->
 	<link rel="icon" href="img/sample logo.png" type="image/x-icon">
@@ -25,6 +25,8 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="/vendor/duallistbox/bootstrap-duallistbox.css" rel="stylesheet" />
+    <link href="/vendor/duallistbox/bootstrap-duallistbox.min.css" rel="stylesheet"/>
 
 </head>
 
@@ -47,12 +49,12 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-
             <!-- Divider -->
             <hr class="sidebar-divider">
 
+
             <!-- Nav Item - Attendance -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="TeacherAttendance.html">
                     <i class="fas fa-fw fa-chalkboard-user"></i>
                     <span>Attendance</span></a>
@@ -72,7 +74,7 @@
             </li>
 
             <!-- Nav Item - Manage Courses -->
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="TeacherManageCourse.html">
                     <i class="fa-solid fa-swatchbook"></i>
                     <span>Manage Course</span></a>
@@ -106,7 +108,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top bg-gradient-light">
+                <nav class="navbar navbar-expand navbar-light  topbar mb-4 static-top bg-gradient-light">
 
                     <!-- Sidebar Toggle (Topbar) -->
                     <form class="form-inline">
@@ -134,45 +136,47 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800 font-weight-bold">Attendance</h1>
+                    <!-- <div class="row">
+                        <div class="col-md-8">
+                            <h1 class="h3 mb-2 text-gray-800 font-weight-bold">Course: </h1>
+                        </div>
+                        <div class="col-md-4">
+                            <h1 class="h3 mb-2 text-gray-800 font-weight-bold">Teacher: </h1>
+                        </div>
+                    </div> -->
+
+                    <h1 id="course" class="h3 mb-2 text-gray-800 font-weight-bold"> </h1>
+                    <h1 id="teacher" class="h5 mb-2 text-gray-800 font-weight-bold"> </h1>
+
 
                     <!-- DataTales Example -->
                     <div class="card">
                         <div class="card-header py-3">
                             <div class="row">
-                                <div class="col-md-10">
-                                    <h6 class="m-0 font-weight-bold text-primary">List of Attendance</h6>
+                                <div class="col-md-12">
+                                    <nav aria-label="breadcrumb">
+                                        <ol class="breadcrumb">
+                                          <li class="breadcrumb-item font-weight-bold"><a href="TeacherManageCourse.html">List of Courses</a></li>
+                                          <li class="breadcrumb-item font-weight-bold active" aria-current="page">View Course</li>
+                                        </ol>
+                                      </nav>
                                 </div>
-                                <div class="col-md-2 text-right">
-                                    <!-- Add Student Button -->
-                                    <button type="button" class="btn btn-primary btn-sm m-n1 " data-toggle="modal" data-target="#">
-                                        <i class="fa-solid fa-chalkboard-user"></i>
-                                        Create Attendance
-                                    </button>
-
-                                    
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                         
-                        
+
                         <div class="card-body bg-white shadow-lg">
-                            <div class="table-responsive ">
-                                <table class="table table-bordered shadow-sm" id="attendanceTable" width="100%" cellspacing="0">
-
-                                    
-                            </div>
-
-
-                                    
+                            <div class="table-responsive">
+                                <table class="table table-bordered shadow-sm" id="courseViewTable" width="100%" cellspacing="0">
+                                      
 
                                 </table>
                             </div>
                         </div>
-                    </div>
+                    
 
-                </div>
+                
                 <!-- /.container-fluid -->
 
             </div>
@@ -223,12 +227,14 @@
     <!-- Page level plugins -->
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="/vendor/duallistbox/jquery.bootstrap-duallistbox.js"></script>
+    <script src="/vendor/duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
     <!-- js file -->
-    <script type="module" src=" "></script>
+    <script type="module" src="js/AdminViewCourse.js"></script>
     <script src="https://kit.fontawesome.com/917066f681.js" crossorigin="anonymous"></script>
 </body>
 

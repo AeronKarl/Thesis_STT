@@ -1,7 +1,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js'
 
 // Add Firebase products that you want to use
-import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-auth.js'
+import { getAuth, createUserWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-auth.js'
 import { getFirestore, collection, onSnapshot, query, where, setDoc, doc, deleteDoc, updateDoc, getDoc } from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js'
 
 
@@ -61,7 +61,13 @@ $('#addTeacherModal').on('hidden.bs.modal', function () {
 
 
 //Table Related Functions
-$(document).ready(() => {
+$(document).ready(async () => {
+
+    //Show Teacher Name
+    let userLogin = sessionStorage.getItem('userLogin');
+    const getUserLogin = await getDoc(doc(db, "users", userLogin));
+    document.getElementById("teacherName").innerHTML = "Hi " + getUserLogin.data()['firstName'];
+
    var table = $('#teacherTable').DataTable({
     columns: [
         {title: "TeacherID", visible: false},
@@ -153,7 +159,17 @@ $(document).ready(() => {
         })
     });
 
+    //logout
+    $('#logout').on("click", function() {
+        signOut(auth).then(() => {
+            window.location.href = "login.html";
+          }).catch((error) => {
+            alert(error.message)
+          });
+    })
+
   });
+
 
 
 
