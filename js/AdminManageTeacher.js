@@ -102,7 +102,7 @@ $(document).ready(async () => {
             //     table.row().data([tableRow]).draw();
             // }
             if(change.type === "removed"){
-                table.row().remove([tableRow]).draw();
+                
             }
 
             console.log(tableRow);
@@ -147,11 +147,13 @@ $(document).ready(async () => {
     $("#teacherTable tbody").on("click", "#delete", async function () {
         $('#deleteTeacherModal').modal("show");
         let data = table.row($(this).parents('tr')).data();
+        let removeRow = table.row($(this).parents('tr'));
         let teacherID = doc(db, "users", data[0]);
         $('#buttonDelete').on('click', async function(e){
             await deleteDoc(teacherID)
             .then(() => {
                 $('#deleteTeacherModal').modal("hide");
+                removeRow.remove().draw();
             })
             .catch((err) => {
                 console.log(err.message);

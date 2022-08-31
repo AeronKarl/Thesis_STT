@@ -104,7 +104,7 @@ $(document).ready(async () => {
             //     table.row().data([tableRow]).draw();
             // }
             if(change.type === "removed"){
-                table.row().remove([tableRow]).draw();
+                
             }
 
             console.log(tableRow);
@@ -195,6 +195,7 @@ $(document).ready(async () => {
     $("#studentTable tbody").on("click", "#delete", async function () {
         $('#deleteStudentModal').modal("show");
         let data = table.row($(this).parents('tr')).data();
+        let removeRow = table.row($(this).parents('tr'));
         let studentID = doc(db, "students", data[0]);
         $('#buttonDelete').on('click', async function(e){
             let getStudent = await getDoc(studentID);
@@ -206,6 +207,7 @@ $(document).ready(async () => {
                 await deleteDoc(studentID)
                 .then(() => {
                     $('#deleteStudentModal').modal("hide");
+                    removeRow.remove().draw();
                 }).catch((err) => {
                     console.log(err.message);
                 });

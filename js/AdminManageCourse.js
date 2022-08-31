@@ -129,7 +129,7 @@ $(document).ready(async() => {
                 //     table.row().data([tableRow]).draw();
                 // }
                 if(change.type === "removed"){
-                    table.row().remove([tableRow]).draw();
+
                 }
 
             })
@@ -146,6 +146,7 @@ $(document).ready(async() => {
                 let teacherNameRef = doc(db, "users", CourseTeacher);
                 let getTeacher = await getDoc(teacherNameRef);
                 let teacherName = getTeacher.data()['firstName'] + " " + getTeacher.data()['lastName'];
+                
 
                 let tableRow = [courseID, CourseName, teacherName];
 
@@ -157,7 +158,7 @@ $(document).ready(async() => {
                 //     table.row().data([tableRow]).draw();
                 // }
                 if(change.type === "removed"){
-                    table.row().remove([tableRow]).draw();
+                    
                 }
 
             })
@@ -231,11 +232,14 @@ $(document).ready(async() => {
     $("#courseTable tbody").on("click", "#delete", async function () {
         $('#deleteCourseModal').modal("show");
         let data = table.row($(this).parents('tr')).data();
+        let removeRow = table.row($(this).parents('tr'));
         let courseID = doc(db, "courses", data[0]);
+        console.log(data);
         $('#buttonDelete').on('click', async function(e){
             await deleteDoc(courseID)
             .then(() => {
                 $('#deleteCourseModal').modal("hide");
+                removeRow.remove().draw();
             })
             .catch((err) => {
                 console.log(err.message);
