@@ -30,6 +30,9 @@ AddStudent.addEventListener('submit', (e) => {
     };
     const storageRef = sRef(storage, name);
 
+    let myAlert =document.getElementById('toastAddStudent');//select id of toast
+    let bsAlert = new bootstrap.Toast(myAlert);//inizialize it
+
     //Add Picture to Storage
     uploadBytes(storageRef, file, metadata)
         .then(snapshot => {
@@ -50,6 +53,7 @@ AddStudent.addEventListener('submit', (e) => {
         }).then(() => {
             $('#addStudentModal').modal('hide');
             AddStudent.reset();
+            bsAlert.show();//show it
         }).catch((err) => {
             console.log(err.message);
         });
@@ -197,6 +201,8 @@ $(document).ready(async () => {
         let data = table.row($(this).parents('tr')).data();
         let removeRow = table.row($(this).parents('tr'));
         let studentID = doc(db, "students", data[0]);
+        let myAlert =document.getElementById('toastDeleteStudent');//select id of toast
+        let bsAlert = new bootstrap.Toast(myAlert);//inizialize it
         $('#buttonDelete').on('click', async function(e){
             let getStudent = await getDoc(studentID);
             const deleteStud = sRef(storage, getStudent.data()["pictureURL"]);
@@ -208,6 +214,7 @@ $(document).ready(async () => {
                 .then(() => {
                     $('#deleteStudentModal').modal("hide");
                     removeRow.remove().draw();
+                    bsAlert.show();//show it
                 }).catch((err) => {
                     console.log(err.message);
                 });

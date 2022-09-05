@@ -23,6 +23,9 @@ AddCourse.addEventListener('submit', async (e) => {
     let name = document.getElementById("addCourseName").value;
     let teacher = document.getElementById("addCourseTeacher").value;
     let selectedStudents = $('[name="addCourseStudent[]"]').val();
+
+    let myAlert =document.getElementById('toastAddCourse');//select id of toast
+    let bsAlert = new bootstrap.Toast(myAlert);//inizialize it
     
 
     const newCourse = await addDoc(collection(db, "courses"), {
@@ -32,6 +35,7 @@ AddCourse.addEventListener('submit', async (e) => {
     })
     console.log("Document ID: ", newCourse.id);
     $('#addCourseModal').modal('hide');
+    bsAlert.show();//show it
 
 })
 
@@ -234,12 +238,15 @@ $(document).ready(async() => {
         let data = table.row($(this).parents('tr')).data();
         let removeRow = table.row($(this).parents('tr'));
         let courseID = doc(db, "courses", data[0]);
+        let myAlert =document.getElementById('toastDeleteCourse');//select id of toast
+        let bsAlert = new bootstrap.Toast(myAlert);//inizialize it
         console.log(data);
         $('#buttonDelete').on('click', async function(e){
             await deleteDoc(courseID)
             .then(() => {
                 $('#deleteCourseModal').modal("hide");
                 removeRow.remove().draw();
+                bsAlert.show();//show it
             })
             .catch((err) => {
                 console.log(err.message);

@@ -21,6 +21,8 @@ AddTeacher.addEventListener('submit', (e) => {
     //get user info
     const email = AddTeacher['TeacherEmail'].value;
     const pass = AddTeacher['TeacherPassword'].value;
+    let myAlert =document.getElementById('toastAddTeacher');//select id of toast
+    let bsAlert = new bootstrap.Toast(myAlert);//inizialize it
 
     
     // sign up the user or Create Teacher
@@ -38,6 +40,7 @@ AddTeacher.addEventListener('submit', (e) => {
         }).then(() => {
             $('#addTeacherModal').modal('hide');
             AddTeacher.reset();
+            bsAlert.show();//show it
             AddTeacher.querySelector('#error').innerHTML = '';
         })
         .catch((err) => {
@@ -149,11 +152,14 @@ $(document).ready(async () => {
         let data = table.row($(this).parents('tr')).data();
         let removeRow = table.row($(this).parents('tr'));
         let teacherID = doc(db, "users", data[0]);
+        let myAlert =document.getElementById('toastDeleteTeacher');//select id of toast
+        let bsAlert = new bootstrap.Toast(myAlert);//inizialize it
         $('#buttonDelete').on('click', async function(e){
             await deleteDoc(teacherID)
             .then(() => {
                 $('#deleteTeacherModal').modal("hide");
                 removeRow.remove().draw();
+                bsAlert.show();//show it
             })
             .catch((err) => {
                 console.log(err.message);
